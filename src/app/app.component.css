@@ -1,0 +1,55 @@
+/* Basic reset for padding and margin */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+/* Full-height layout container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Fixed header at the top 
+
+/* Fixed footer at the bottom */
+app-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  z-index: 10;
+}
+
+/* Content area with space for header and footer */
+.main-content {
+  flex: 1;
+  margin-top: 4rem; /* adjust based on header height */
+  margin-bottom: 4rem; /* adjust based on footer height */
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-content {
+    margin-top: 3.5rem;
+    margin-bottom: 3.5rem;
+  }
+}
+
