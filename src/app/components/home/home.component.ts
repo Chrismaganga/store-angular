@@ -1,15 +1,20 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from "../header/header.component";
+
 import { ActivatedRoute } from '@angular/router';
 import { Product } from '../../../shared/models/Product';
 import { ProductService } from '../../services/product.service';
+import { ProductListComponent } from "../product-list/product-list.component";
+import { ProductDetailComponent } from "../product-detail/product-detail.component";
+
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  imports: [HeaderComponent]
+  imports: [ProductListComponent, ProductDetailComponent],
+
 })
 export class HomeComponent {
 changeTitle() {

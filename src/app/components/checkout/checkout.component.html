@@ -1,0 +1,17 @@
+<!-- src/app/components/checkout/checkout.component.html -->
+<h2>Checkout</h2>
+<form (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name">Name:</label>
+    <input id="name" name="name" [(ngModel)]="name" required>
+  </div>
+  <div>
+    <label for="address">Address:</label>
+    <input id="address" name="address" [(ngModel)]="address" required>
+  </div>
+  <div>
+    <label for="payment">Payment Details:</label>
+    <input id="payment" name="payment" [(ngModel)]="payment" required>
+  </div>
+  <button type="submit">Complete Purchase</button>
+</form>

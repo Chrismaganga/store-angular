@@ -10,6 +10,8 @@ import { Product } from '../../../shared/models/Product';
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css'],
+  standalone: true,
+  imports: []
 })
 export class ProductDetailComponent implements OnInit {
 addToCart(arg0: Product) {

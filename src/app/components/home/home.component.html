@@ -1,21 +1,5 @@
-<app-home>
-  <div>
-    <h1>Welcome to the Home Page</h1>
-    <p>This is the home page of the store.</p>
-    <h1>{{ title }}</h1>
-    <p>{{ message }}</p>
-    <button (click)="changeTitle()">Change Title</button>
-    <div *if="products.length > 0">
-      <h2>Products</h2>
-      <div class="products">
-        <div class="product" *for="let product of products">
-          <img [src]="product.imageUrl" alt="{{ product.name }}" />
-          <h3>{{ product.name }}</h3>
-          <p>{{ product.description }}</p>
-          <p>Price: ${{ product.price }}</p>
-        </div>
-      </div>
-    </div>
-  
-  </div>
-</app-home>
+<div class="home-container">
+  <h1>My Store</h1>
+  <app-product-list class="product-list"></app-product-list>
+  <app-product-detail class="product-detail"></app-product-detail>
+</div>
