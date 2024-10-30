@@ -1,0 +1,19 @@
+.cart {
+    position: relative; /* Relative positioning for absolute positioning of count */
+}
+
+.cart-icon {
+    font-size: 24px; /* Size of the cart icon */
+    color: red; /* Color of the cart icon */
+}
+
+.cart-count {
+    position: absolute; /* Position count relative to cart icon */
+    top: -5px; /* Adjust position as needed */
+    right: -10px; /* Adjust position as needed */
+    background-color: red; /* Background color for the count */
+    color: white; /* Text color for the count */
+    border-radius: 50%; /* Make the count circular */
+    padding: 3px 6px; /* Padding for the count */
+    font-size: 14px; /* Font size for the count */
+}

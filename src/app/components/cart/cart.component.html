@@ -1,5 +1,5 @@
 <!-- src/app/components/cart/cart.component.html -->
-<h2>Shopping Cart</h2>
+<!-- <h2>Shopping Cart</h2>
 <div *ngIf="(cartItems$ | async) as cartItems">
   <div *for="let item of cartItems">
     <h3>{{ item.name }}</h3>
@@ -9,4 +9,31 @@
   <h3>Total: {{ totalAmount | currency }}</h3>
   <button (click)="clearCart()">Clear Cart</button>
   <a routerLink="/checkout" class="button">Proceed to Checkout</a>
+</div> -->
+<div class="cart">
+  <h2>Cart</h2>
+  <div *ngIf="error" class="error">{{ error }}</div>
+  <div *ngIf="loading; else cartItems$">Loading...</div>
+  
+  <div *ngIf="cartItems$.length; else emptyCart">
+    <div class="cart-item" *ngFor="let item of cartItems$">
+      <img [src]="item.product.image" alt="{{ item.product.title }}" />
+      <h3>{{ item.product.title }}</h3>
+      <p>Price: ${{ item.product.price }}</p>
+      <label>
+        Quantity:
+
+        <!-- <input type="number" [value]="item.quantity" (change)="updateQuantity(item.product._id, $event.target.value)" /> -->
+      <input type="number" [(ngModel)]="item.quantity" (change)="updateQuantity(item.product._id, item.quantity)" />
+ 
+      </label>
+      <button (click)="removeItem(item.product._id)">Remove</button>
+    </div>
+    <p>Total Price: ${{ totalPrice }}</p>
+    <button (click)="clearCart()">Clear Cart</button>
+  </div>
+  <ng-template #emptyCart>
+    <p>Your cart is empty.</p>
+    <a routerLink="/checkout" class="button">Proceed to Checkout</a>
+  </ng-template>
 </div>

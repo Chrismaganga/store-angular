@@ -1,4 +1,4 @@
-.footer {
+/* .footer {
   display: flex;
   justify-content: space-around;
   padding: 2rem;
@@ -28,4 +28,36 @@
 
 .social-media a {
   margin-right: 0.5rem;
+} */
+/* General styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif; /* Use a font of your choice */
+}
+
+/* Footer styles */
+.footer {
+  background-color: #f7fafc; /* Light gray 100 */
+  color: #1e40af; /* Blue color */
+  padding: 20px; /* Space inside the footer */
+  position: relative; /* Ensure it stays with content */
+  clear: both; /* Clear any floats */
+}
+
+.footer-section {
+  margin-bottom: 15px; /* Space between sections */
+}
+
+.footer-section h3 {
+  margin: 0 0 10px; /* Space below the heading */
+}
+
+.footer-section a {
+  color: #1e40af; /* Blue color for links */
+  text-decoration: none; /* Remove underline from links */
+}
+
+.footer-section a:hover {
+  text-decoration: underline; /* Underline on hover */
 }

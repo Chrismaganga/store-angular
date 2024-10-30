@@ -1,59 +1,83 @@
-/* Basic Navbar Styling */
+/* General reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar styles */
 .navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-    background-color: #e1e6eb;
-    color: rgb(26, 13, 204);
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Space between logo and nav */
+    align-items: center; /* Center items vertically */
+    background-color: white; /* White background */
+    padding: 10px 20px; /* Padding for the navbar */
+    position: relative; /* Position relative for absolute positioning of menu */
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 24px; /* Logo font size */
+    font-weight: bold; /* Bold logo */
+    color: red; /* Red text for logo */
 }
 
-/* Navigation Links */
+/* Menu toggle button */
+.menu-toggle {
+    background: none; /* No background */
+    border: none; /* No border */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 24px; /* Increase the size of the hamburger icon */
+    color: red; /* Red color for the hamburger icon */
+}
+
+/* Nav links styles */
 .nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
+    display: flex; /* Use flexbox for navigation links */
+    list-style: none; /* No list style */
+    padding: 0; /* No padding */
+}
+
+.nav-links li {
+    margin-left: 20px; /* Space between nav items */
 }
 
 .nav-links a {
-    color: white;
-    text-decoration: none;
-    font-size: 1rem;
+    text-decoration: none; /* No underline on links */
+    color: red; /* Red text for links */
+    font-size: 18px; /* Font size for links */
+    transition: color 0.3s; /* Smooth transition for color change */
 }
 
-/* Menu Toggle Button for Mobile */
-.menu-toggle {
-    display: none;
-    font-size: 1.5rem;
-    background: none;
-    color: rgb(6, 30, 110);
-    border: none;
+/* Hover effect for links */
+.nav-links a:hover {
+    color: darkred; /* Darker red on hover */
 }
 
-/* Responsive Styles */
+/* Responsive styles */
 @media (max-width: 768px) {
     .nav-links {
-        display: none;
-        flex-direction: column;
-        background-color: #f6f9fc;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        text-align: center;
-        padding: 1rem 0;
+        display: none; /* Hide links by default */
+        flex-direction: column; /* Stack links vertically */
+        position: absolute; /* Absolute positioning */
+        top: 60px; /* Position below the navbar */
+        left: 0; /* Align to the left */
+        right: 0; /* Stretch to the right */
+        background-color: white; /* Background color for the dropdown */
+        padding: 10px 0; /* Padding for dropdown */
+        border-top: 1px solid #ccc; /* Optional border */
     }
 
     .nav-links.open {
-        display: flex;
+        display: flex; /* Show links when menu is open */
     }
 
     .menu-toggle {
-        display: block;
+        display: block; /* Show toggle button */
+    }
+}
+
+@media (min-width: 769px) {
+    .menu-toggle {
+        display: none; /* Hide toggle button on larger screens */
     }
 }

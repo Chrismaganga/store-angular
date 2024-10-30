@@ -10,6 +10,10 @@ import { Product } from '../../shared/models/Product';
   providedIn: 'root',
 })
 export class ProductService {
+  value: any;
+  next(items: any) {
+    throw new Error('Method not implemented.');
+  }
   private apiUrl = 'https://jsonserver.reactbd.com/phone';
 
   constructor(private http: HttpClient) {}
