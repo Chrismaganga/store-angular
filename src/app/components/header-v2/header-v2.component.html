@@ -1,22 +1,26 @@
-
 <header class="navbar">
   <div class="logo">store-angular</div>
   <button class="menu-toggle" aria-label="Toggle menu" (click)="toggleMenu()">
     &#9776;
     <!-- Hamburger icon -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
   </button>
   <nav>
     <ul class="nav-links" [class.open]="isMenuOpen">
-  <li><a routerLink="/" (click)="isMenuOpen = false">Home</a></li>
-  <li><a routerLink="/product-list" (click)="isMenuOpen = false">Products</a></li>
-  <li><a routerLink="/cart" (click)="isMenuOpen = false">Cart</a></li>
-    <li class="cart">
+    
+      <li>
+        <a routerLink="/product-list" (click)="isMenuOpen = false">Products</a>
+      </li> 
+      <li><a routerLink="/cart" (click)="isMenuOpen = false">Cart</a></li>
+      <li class="cart">
         <a routerLink="/cart" (click)="isMenuOpen = false">
-          <span class="cart-icon">&#128722;</span> <!-- Cart icon -->
-          <span class="cart-count">{{ cartCount }}</span> <!-- Number of items in cart -->
+          <span class="cart-icon">&#128722;</span>
+          <span class="cart-count">{{ cartCount }}</span>
         </a>
       </li>
-     
     </ul>
   </nav>
 </header>

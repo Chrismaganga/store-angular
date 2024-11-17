@@ -1,4 +1,5 @@
 export interface Product {
+_id: any;
 name: string;
 imageUrl: any;
   id: number;            // Unique identifier for the product

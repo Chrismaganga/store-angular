@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../../services/product.service';
-import { Product } from '../../../shared/models/Product';
-import { CommonModule } from '@angular/common';
+import { Component, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
+
 import { CartService } from '../../services/cart.service';
+import { CommonModule } from '@angular/common';
+import { Product } from '../../../shared/models/Product';
+import { ProductService } from '../../services/product.service';
 
 interface CartItem {
-  product: Product; // Update this line
+  product: Product;
   quantity: number;
 }
 
@@ -19,11 +20,12 @@ interface CartItem {
   ],
 })
 export class ProductListComponent implements OnInit {
+showMessage() {
+throw new Error('Method not implemented.');
+}
 
-//   cartItemsSubject: any;
-// removeToCart(_t6: Product) {
-// }
   products: Product[] = [];
+  message: string = '';
 
   constructor(
     private productService: ProductService,
@@ -39,22 +41,24 @@ export class ProductListComponent implements OnInit {
   addToCart(product: Product): void {
     const cartItem: CartItem = {
       product: product,
-      quantity: 1 // Set the initial quantity
+      quantity: 1
     };
     
-    this.cartService.addToCart(cartItem); // Pass the cart item
+    this.cartService.addToCart(cartItem);
     alert(`${product.title} has been added to the cart!`);
+    
+    // Remove the product from the display list
+    this.products = this.products.filter(p => p._id !== product.id);
+    
+    // Log the product ID
+    console.log(`Product ID ${product._id} added to cart`);
   }
 
   onError(event: ErrorEvent): void {
     console.error('Image load error', event);
   }
-  // In cart.service.ts
-removeFromCart(productId: number): void {
-  const items = this.productService.value.filter((item: { product: { id: number; }; }) => item.product.id !== productId);
-  this.productService.next(items);
-}
 
-
-
+  viewCart(): void {
+    window.location.href = '/cart';
+  }
 }

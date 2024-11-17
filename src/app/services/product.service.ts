@@ -1,10 +1,7 @@
-// src/app/services/product.service.ts
-
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from '../../shared/models/Product';
-
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +11,7 @@ export class ProductService {
   next(items: any) {
     throw new Error('Method not implemented.');
   }
+
   private apiUrl = 'https://jsonserver.reactbd.com/phone';
 
   constructor(private http: HttpClient) {}
@@ -26,6 +24,6 @@ export class ProductService {
   // Fetch a single product by ID
   getProductById(id: number): Observable<Product> {
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
-    
+
   }
 }
