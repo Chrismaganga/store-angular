@@ -1,102 +1,82 @@
+/* General reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar styles */
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: #110981;
-  color: white;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+    display: flex; 
+    justify-content: space-between;
+    align-items: center; 
+    background-color: white; 
+    padding: 10px 20px;
+    position: relative;
 }
 
-.navbar .logo {
-  font-size: 20px;
-  font-weight: bold;
-  text-transform: uppercase;
+.logo {
+    font-size: 24px; 
+    font-weight: bold; 
+    color: red; 
+
+/* Menu toggle button */
+.menu-toggle {
+    background: none; /* No background */
+    border: none; /* No border */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 24px; /* Increase the size of the hamburger icon */
+    color: red; /* Red color for the hamburger icon */
 }
 
-.navbar .menu-toggle {
-  display: none;
-  font-size: 24px;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-}
-
-.navbar nav {
-  flex: 1;
-}
-
+/* Nav links styles */
 .nav-links {
-  display: flex;
-  justify-content: flex-end;
-  gap: 20px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+    display: flex; /* Use flexbox for navigation links */
+    list-style: none; /* No list style */
+    padding: 0; /* No padding */
 }
 
-.nav-links li a {
-  text-decoration: none;
-  color: white;
-  font-size: 16px;
-  transition: color 0.3s ease;
+.nav-links li {
+    margin-left: 20px; /* Space between nav items */
 }
 
-.nav-links li a:hover {
-  color: #ff9800;
+.nav-links a {
+    text-decoration: none; /* No underline on links */
+    color: red; /* Red text for links */
+    font-size: 18px; /* Font size for links */
+    transition: color 0.3s; /* Smooth transition for color change */
 }
 
-.nav-links .cart {
-  position: relative;
+/* Hover effect for links */
+.nav-links a:hover {
+    color: darkred; /* Darker red on hover */
 }
 
-.nav-links .cart .cart-icon {
-  font-size: 20px;
-}
-
-.nav-links .cart .cart-count {
-  position: absolute;
-  top: -5px;
-  right: -10px;
-  background: #ff9800;
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
-  border-radius: 50%;
-  padding: 2px 6px;
-}
-
-
+/* Responsive styles */
 @media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-  }
+    .nav-links {
+        display: none; /* Hide links by default */
+        flex-direction: column; /* Stack links vertically */
+        position: absolute; /* Absolute positioning */
+        top: 60px; /* Position below the navbar */
+        left: 0; /* Align to the left */
+        right: 0; /* Stretch to the right */
+        background-color: white; /* Background color for the dropdown */
+        padding: 10px 0; /* Padding for dropdown */
+        border-top: 1px solid #ccc; /* Optional border */
+    }
 
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    background-color: #333;
-    position: absolute;
-    top: 50px;
-    right: 0;
-    width: 200px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    padding: 10px 0;
-  }
+    .nav-links.open {
+        display: flex; /* Show links when menu is open */
+    }
 
-  .nav-links.open {
-    display: flex;
-  }
+    .menu-toggle {
+        display: block; /* Show toggle button */
+    }
+}
 
-  .nav-links li {
-    text-align: center;
-    margin: 10px 0;
-  }
-
-  .nav-links li a {
-    font-size: 18px;
-  }
+@media (min-width: 769px) {
+    .menu-toggle {
+        display: none; /* Hide toggle button on larger screens */
+    }
 }

@@ -1,9 +1,8 @@
-import { Component, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
-
-import { CartService } from '../../services/cart.service';
-import { CommonModule } from '@angular/common';
-import { Product } from '../../../shared/models/Product';
+import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
+import { Product } from '../../../shared/models/Product';
+import { CommonModule } from '@angular/common';
+import { CartService } from '../../services/cart.service';
 
 interface CartItem {
   product: Product;
@@ -20,12 +19,8 @@ interface CartItem {
   ],
 })
 export class ProductListComponent implements OnInit {
-showMessage() {
-throw new Error('Method not implemented.');
-}
 
   products: Product[] = [];
-  message: string = '';
 
   constructor(
     private productService: ProductService,
@@ -46,19 +41,17 @@ throw new Error('Method not implemented.');
     
     this.cartService.addToCart(cartItem);
     alert(`${product.title} has been added to the cart!`);
-    
-    // Remove the product from the display list
-    this.products = this.products.filter(p => p._id !== product.id);
-    
-    // Log the product ID
-    console.log(`Product ID ${product._id} added to cart`);
   }
 
   onError(event: ErrorEvent): void {
     console.error('Image load error', event);
   }
+  // In cart.service.ts
+removeFromCart(productId: number): void {
+  const items = this.productService.value.filter((item: { product: { id: number; }; }) => item.product.id !== productId);
+  this.productService.next(items);
+}
 
-  viewCart(): void {
-    window.location.href = '/cart';
-  }
+
+
 }

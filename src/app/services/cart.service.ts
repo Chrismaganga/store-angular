@@ -1,10 +1,10 @@
-import { BehaviorSubject, Observable } from 'rxjs';
 
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Product } from '../../shared/models/Product';
 
 export interface CartItem {
-    product: Product; // Change from Product[] to Product
+    product: Product; 
     quantity: number;
 }
 
@@ -12,15 +12,6 @@ export interface CartItem {
   providedIn: 'root'
 })
 export class CartService {
-  updateQuantity(productId: number, quantity: number) {
-    throw new Error('Method not implemented.');
-  }
-  getProductById(productId: number) {
-    throw new Error('Method not implemented.');
-  }
-  updateCart(filteredItems: CartItem[]) {
-    throw new Error('Method not implemented.');
-  }
   private cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
   cartItems$ = this.cartItemsSubject.asObservable();
 
@@ -33,7 +24,7 @@ export class CartService {
   addToCart(item: CartItem): void {
     const items = this.cartItemsSubject.value;
     items.push(item);
-    this.cartItemsSubject.next([...items]); // Spread to trigger a new state in BehaviorSubject
+    this.cartItemsSubject.next([...items]); 
   }
 
   // Update the quantity of a cart item
