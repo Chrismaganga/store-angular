@@ -65,10 +65,12 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Subscribe to cart items to get total amount
     this.cartService.getCartItems().subscribe(items => {
       this.totalAmount = items.reduce((total, item) => 
         total + (item.product.price * item.quantity), 0);
       
+      // Redirect to cart if empty
       if (this.totalAmount === 0) {
         this.router.navigate(['/cart']);
       }
@@ -85,23 +87,34 @@ export class CheckoutComponent implements OnInit {
     this.error = '';
 
     try {
+      // Process payment
       await this.simulatePayment();
 
+      // Create order details
       const orderDetails: OrderDetails = {
         ...this.checkoutForm.value,
         totalAmount: this.totalAmount,
         orderId: this.generateOrderId()
       };
 
-      this.cartService.clearCart();
+      // Clear cart
+      await this.cartService.clearCart();
 
-      this.router.navigate(['/order-confirmation'], {
-        state: { orderDetails }
-      });
+      // Show success message
+      alert('Order placed successfully! Thank you for your purchase.');
+      
+      // Redirect to home page
+      this.router.navigate(['/']);
     } catch (err) {
-      this.error = 'Payment failed. Please try again.';
+      console.error('Checkout error:', err);
+      this.error = 'An error occurred during checkout. Please try again.';
+    } finally {
       this.loading = false;
     }
+  }
+
+  backToCart(): void {
+    this.router.navigate(['/cart']);
   }
 
   private markFormGroupTouched(formGroup: FormGroup): void {
@@ -117,6 +130,7 @@ export class CheckoutComponent implements OnInit {
   private simulatePayment(): Promise<void> {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
+        // Simulate 90% success rate
         if (Math.random() > 0.1) {
           resolve();
         } else {
@@ -127,7 +141,9 @@ export class CheckoutComponent implements OnInit {
   }
 
   private generateOrderId(): string {
-    return 'ORD-' + Math.random().toString(36).substring(2, 9).toUpperCase();
+    const timestamp = new Date().getTime();
+    const random = Math.random().toString(36).substring(2, 9).toUpperCase();
+    return `ORD-${timestamp}-${random}`;
   }
 
   getErrorMessage(controlName: string, groupName?: string): string {

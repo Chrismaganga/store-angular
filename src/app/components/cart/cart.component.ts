@@ -1,23 +1,23 @@
-// src/app/components/cart/cart.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CartService, CartItem } from '../../services/cart.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Router, RouterModule } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, RouterModule]
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnDestroy {
   cartItems$: Observable<CartItem[]>;
   totalPrice: number = 0;
   error: string = '';
   loading: boolean = false;
+  private subscriptions: Subscription = new Subscription();
 
   constructor(
     private cartService: CartService,
@@ -28,16 +28,23 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.cartItems$.subscribe({
-      next: (items) => {
-        this.calculateTotal();
-        this.loading = false;
-      },
-      error: (err) => {
-        this.error = 'Error loading cart items';
-        this.loading = false;
-      }
-    });
+    this.subscriptions.add(
+      this.cartItems$.subscribe({
+        next: (items) => {
+          this.calculateTotal();
+          this.loading = false;
+        },
+        error: (err: Error) => {
+          this.error = 'Error loading cart items';
+          this.loading = false;
+          console.error('Cart loading error:', err);
+        }
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   removeItem(productId: number): void {
@@ -46,6 +53,7 @@ export class CartComponent implements OnInit {
       this.calculateTotal();
     } catch (err) {
       this.error = 'Error removing item from cart';
+      console.error('Remove item error:', err);
     }
   }
 
@@ -54,11 +62,16 @@ export class CartComponent implements OnInit {
       this.error = 'Quantity must be at least 1';
       return;
     }
+    if (quantity > 99) {
+      this.error = 'Maximum quantity is 99';
+      return;
+    }
     try {
       this.cartService.updateCartItemQuantity(productId, quantity);
       this.calculateTotal();
     } catch (err) {
       this.error = 'Error updating quantity';
+      console.error('Update quantity error:', err);
     }
   }
 
@@ -68,17 +81,32 @@ export class CartComponent implements OnInit {
       this.totalPrice = 0;
     } catch (err) {
       this.error = 'Error clearing cart';
+      console.error('Clear cart error:', err);
     }
   }
 
   calculateTotal(): void {
-    this.cartItems$.subscribe(items => {
-      this.totalPrice = items.reduce((total, item) => 
-        total + (item.product.price * item.quantity), 0);
-    });
+    this.subscriptions.add(
+      this.cartItems$.subscribe(items => {
+        this.totalPrice = items.reduce((total, item) => 
+          total + (item.product.price * item.quantity), 0);
+      })
+    );
   }
 
   proceedToCheckout(): void {
-    this.router.navigate(['/checkout']);
+    if (this.totalPrice > 0) {
+      this.router.navigate(['/checkout']);
+    } else {
+      this.error = 'Your cart is empty';
+    }
+  }
+
+  continueShopping(): void {
+    this.router.navigate(['/product-list']);
+  }
+
+  formatPrice(price: number): string {
+    return price.toFixed(2);
   }
 }

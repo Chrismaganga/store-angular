@@ -1,11 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../../shared/models/Product';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart.service';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 interface CartItem {
   product: Product;
+  quantity: number;
+}
+
+interface ProductWithQuantity extends Product {
   quantity: number;
 }
 
@@ -16,42 +23,109 @@ interface CartItem {
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule
   ],
 })
-export class ProductListComponent implements OnInit {
-
-  products: Product[] = [];
+export class ProductListComponent implements OnInit, OnDestroy {
+  products: ProductWithQuantity[] = [];
+  loading = true;
+  error = '';
+  private subscriptions = new Subscription();
 
   constructor(
     private productService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe((data) => {
-      this.products = data;
-    });
+    this.loading = true;
+    this.subscriptions.add(
+      this.productService.getProducts().subscribe({
+        next: (data) => {
+          // Initialize each product with its own quantity
+          this.products = data.map(product => ({
+            ...product,
+            quantity: 1
+          }));
+          this.loading = false;
+        },
+        error: (error) => {
+          this.error = 'Error loading products. Please try again later.';
+          this.loading = false;
+          console.error('Error loading products:', error);
+        }
+      })
+    );
   }
 
-  addToCart(product: Product): void {
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
+  incrementQuantity(product: ProductWithQuantity, event: Event): void {
+    event.stopPropagation();
+    if (product.quantity < 10) {
+      product.quantity++;
+      // Create a new array reference to trigger change detection
+      this.products = [...this.products];
+    }
+  }
+
+  decrementQuantity(product: ProductWithQuantity, event: Event): void {
+    event.stopPropagation();
+    if (product.quantity > 1) {
+      product.quantity--;
+      // Create a new array reference to trigger change detection
+      this.products = [...this.products];
+    }
+  }
+
+  addToCart(product: ProductWithQuantity, event: Event): void {
+    event.stopPropagation();
     const cartItem: CartItem = {
       product: product,
-      quantity: 1
+      quantity: product.quantity
     };
     
     this.cartService.addToCart(cartItem);
-    alert(`${product.title} has been added to the cart!`);
+    this.showNotification(`${product.title} (${product.quantity}) added to cart!`);
+    // Reset quantity after adding to cart
+    product.quantity = 1;
+    // Create a new array reference to trigger change detection
+    this.products = [...this.products];
+  }
+
+  removeFromCart(product: ProductWithQuantity, event: Event): void {
+    event.stopPropagation();
+    this.cartService.removeFromCart(product.id);
+    this.showNotification('Item removed from cart');
+    // Reset quantity after removing from cart
+    product.quantity = 1;
+    // Create a new array reference to trigger change detection
+    this.products = [...this.products];
+  }
+
+  showNotification(message: string): void {
+    // You can replace this with a proper notification system
+    alert(message);
+  }
+
+  viewProductDetails(product: Product, event: Event): void {
+    event.stopPropagation();
+    this.router.navigate(['/product', product.id]);
   }
 
   onError(event: ErrorEvent): void {
     console.error('Image load error', event);
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = 'assets/images/placeholder.png'; // Add a placeholder image
   }
-  // In cart.service.ts
-removeFromCart(productId: number): void {
-  const items = this.productService.value.filter((item: { product: { id: number; }; }) => item.product.id !== productId);
-  this.productService.next(items);
-}
 
-
-
+  getDiscountPercentage(product: Product): number {
+    if (product.previousPrice) {
+      return Math.round(((product.previousPrice - product.price) / product.previousPrice) * 100);
+    }
+    return 0;
+  }
 }

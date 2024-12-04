@@ -1,10 +1,9 @@
-
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Product } from '../../shared/models/Product';
 
 export interface CartItem {
-    product: Product; 
+    product: Product;
     quantity: number;
 }
 
@@ -15,43 +14,45 @@ export class CartService {
   private cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
   cartItems$ = this.cartItemsSubject.asObservable();
 
-  // Get the current items from the BehaviorSubject
   getCartItems(): Observable<CartItem[]> {
     return this.cartItems$;
   }
 
-  // Add an item to the cart
   addToCart(item: CartItem): void {
-    const items = this.cartItemsSubject.value;
-    items.push(item);
-    this.cartItemsSubject.next([...items]); 
+    const currentItems = this.cartItemsSubject.value;
+    const existingItemIndex = currentItems.findIndex(i => i.product.id === item.product.id);
+
+    if (existingItemIndex > -1) {
+      currentItems[existingItemIndex].quantity += item.quantity;
+      this.cartItemsSubject.next([...currentItems]);
+    } else {
+      this.cartItemsSubject.next([...currentItems, item]);
+    }
   }
 
-  // Update the quantity of a cart item
   updateCartItemQuantity(productId: number, quantity: number): void {
-    const items = this.cartItemsSubject.value.map(item => {
+    const currentItems = this.cartItemsSubject.value;
+    const updatedItems = currentItems.map(item => {
       if (item.product.id === productId) {
-        return { ...item, quantity: quantity > 0 ? quantity : 1 };
+        return { ...item, quantity: Math.max(1, quantity) };
       }
       return item;
     });
-
-    this.cartItemsSubject.next(items);
+    this.cartItemsSubject.next(updatedItems);
   }
 
-  // Remove a product from the cart
   removeFromCart(productId: number): void {
-    const items = this.cartItemsSubject.value.filter(item => item.product.id !== productId);
-    this.cartItemsSubject.next(items);
+    const currentItems = this.cartItemsSubject.value;
+    const updatedItems = currentItems.filter(item => item.product.id !== productId);
+    this.cartItemsSubject.next(updatedItems);
   }
 
-  // Clear the cart entirely
   clearCart(): void {
     this.cartItemsSubject.next([]);
   }
 
-  // Calculate the total price of items in the cart
   getTotalPrice(): number {
-    return this.cartItemsSubject.value.reduce((total, item) => total + item.product.price * item.quantity, 0);
+    return this.cartItemsSubject.value.reduce((total, item) => 
+      total + (item.product.price * item.quantity), 0);
   }
 }

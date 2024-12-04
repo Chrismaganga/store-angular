@@ -1,22 +1,82 @@
+<header class="navbar" [class.menu-open]="isMenuOpen">
+  <div class="navbar-container">
+    <div class="navbar-left">
+      <a routerLink="/" class="logo" (click)="closeMenu()">
+        <span class="logo-text">Store</span>
+      </a>
+      <button class="menu-toggle" aria-label="Toggle menu" (click)="toggleMenu()">
+        <span class="menu-icon"></span>
+      </button>
+    </div>
 
-<header class="navbar">
-  <div class="logo">store-angular</div>
-  <button class="menu-toggle" aria-label="Toggle menu" (click)="toggleMenu()">
-    &#9776;
-    <!-- Hamburger icon -->
-  </button>
-  <nav>
-    <ul class="nav-links" [class.open]="isMenuOpen">
-  <li><a routerLink="/" (click)="isMenuOpen = false">Home</a></li>
-  <li><a routerLink="/product-list" (click)="isMenuOpen = false">Products</a></li>
-  <li><a routerLink="/cart" (click)="isMenuOpen = false">Cart</a></li>
-    <li class="cart">
-        <a routerLink="/cart" (click)="isMenuOpen = false">
-          <span class="cart-icon">&#128722;</span> <!-- Cart icon -->
-          <span class="cart-count">{{ cartCount }}</span> <!-- Number of items in cart -->
-        </a>
-      </li>
-     
-    </ul>
-  </nav>
+    <nav class="navbar-nav" [class.active]="isMenuOpen">
+      <ul class="nav-links">
+        <li>
+          <a routerLink="/" 
+             routerLinkActive="active" 
+             [routerLinkActiveOptions]="{exact: true}"
+             (click)="closeMenu()">Home</a>
+        </li>
+        <li>
+          <a routerLink="/product-list" 
+             routerLinkActive="active"
+             (click)="closeMenu()">Products</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="navbar-right">
+      <div class="cart-container">
+        <button class="cart-link" 
+                (click)="toggleCart($event)"
+                [class.active]="isCartOpen">
+          <div class="cart-icon">
+            <img src="/cart.png" alt="Cart" class="cart-image" />
+            <span class="cart-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
+          </div>
+        </button>
+
+        <div class="cart-dropdown" *ngIf="isCartOpen">
+          <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="close-cart" (click)="closeCart()">×</button>
+          </div>
+
+          <div class="cart-items" *ngIf="cartItems.length > 0">
+            <div class="cart-item" *ngFor="let item of cartItems">
+              <div class="item-image">
+                <img [src]="item.product.imageUrl" [alt]="item.product.name">
+              </div>
+              <div class="item-details">
+                <h4>{{ item.product.name }}</h4>
+                <p class="item-price">${{ item.product.price }}</p>
+                <div class="quantity-controls">
+                  <button (click)="updateQuantity(item, -1)">-</button>
+                  <span>{{ item.quantity }}</span>
+                  <button (click)="updateQuantity(item, 1)">+</button>
+                </div>
+              </div>
+              <button class="remove-item" (click)="removeItem(item)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="cart-empty" *ngIf="cartItems.length === 0">
+            <p>Your cart is empty</p>
+          </div>
+
+          <div class="cart-footer" *ngIf="cartItems.length > 0">
+            <div class="cart-total">
+              <span>Total:</span>
+              <span class="total-amount">${{ getTotal().toFixed(2) }}</span>
+            </div>
+            <button class="checkout-button" (click)="proceedToCheckout()">
+              Proceed to Checkout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </header>

@@ -12,44 +12,44 @@ html, body {
   font-family: Arial, sans-serif;
 }
 
-/* Full-height layout container */
+/* Main container */
 .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
 }
 
-/* Fixed header at the top 
+/* Main content area */
+.main-content {
+  flex: 1 0 auto;
+  padding: 20px;
+  padding-bottom: 100px; /* Height of the footer plus some extra space */
+  margin-top: 60px;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
-/* Fixed footer at the bottom */
+/* Footer positioning */
 app-footer {
-  position: fixed;
+  flex-shrink: 0;
+  width: 100%;
+  margin-top: auto;
+  position: relative;
   bottom: 0;
   left: 0;
-  width: 100%;
-  background-color: #333;
-  color: white;
-  padding: 1rem;
-  text-align: center;
+  background-color: #f8f9fa;
   z-index: 10;
-}
-
-/* Content area with space for header and footer */
-.main-content {
-  flex: 1;
-  margin-top: 4rem; /* adjust based on header height */
-  margin-bottom: 4rem; /* adjust based on footer height */
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .main-content {
-    margin-top: 3.5rem;
-    margin-bottom: 3.5rem;
+    padding: 10px;
+    padding-bottom: 80px; /* Slightly smaller on mobile */
+    margin-top: 50px;
   }
 }
-

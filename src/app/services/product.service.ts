@@ -26,8 +26,5 @@ export class ProductService {
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
 
   }
-  // getAllProductsByCateogry(id: number): Observable<any[]> {
-  //   return this.http.get<any[]>("https://jsonserver.reactbd.com/phone"+ id);
-  // }
 
 }
