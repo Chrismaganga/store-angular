@@ -6,15 +6,15 @@ body {
 
 /* Footer styles */
 .footer {
-  background-color: #f8f9fa;
-  color: #1e40af;
+  background: linear-gradient(135deg, #4CAF50, #2196F3);
+  color: #ffffff;
   width: 100%;
-  border-top: 1px solid #e2e8f0;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   padding: 2rem 0;
   margin: 0;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .footer-content {
@@ -24,6 +24,7 @@ body {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 2rem;
+  padding: 0 2rem;
 }
 
 .footer-section {
@@ -31,14 +32,15 @@ body {
   text-align: center;
   padding: 0;
   margin: 0;
-  width: calc(100% / 3);
+  min-width: 250px;
 }
 
 .footer-section h3 {
-  color: #2d3748;
+  color: #ffffff;
   margin: 0 0 1rem 0;
   font-size: 1.2rem;
   font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .footer-section ul {
@@ -52,20 +54,14 @@ body {
 }
 
 .footer-section a {
-  color: #4a5568;
+  color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .footer-section a:hover {
-  color: #1e40af;
-  text-decoration: underline; /* Underline on hover */
-}
-
-.footer-section p {
-  margin: 0.5rem 0;
-  line-height: 1.5;
-  color: #4a5568;
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
 }
 
 .social-media {
@@ -77,19 +73,19 @@ body {
 
 .social-links {
   display: flex;
-  gap: 1rem;
   justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-.social-media a {
-  color: #4a5568;
-  text-decoration: none;
-  transition: color 0.2s ease;
-  padding: 0.5rem;
+.social-links a {
+  color: #ffffff;
+  font-size: 1.5rem;
+  transition: transform 0.2s ease;
 }
 
-.social-media a:hover {
-  color: #1e40af;
+.social-links a:hover {
+  transform: translateY(-2px);
 }
 
 .footer-bottom {
@@ -107,6 +103,12 @@ body {
     flex-direction: column;
     align-items: center;
     padding: 1rem 0;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
   }
 
   .footer-section {

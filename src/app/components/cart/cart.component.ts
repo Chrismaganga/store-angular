@@ -51,6 +51,12 @@ export class CartComponent implements OnInit, OnDestroy {
     try {
       this.cartService.removeFromCart(productId);
       this.calculateTotal();
+      // Check if cart is empty after removal
+      this.cartItems$.subscribe(items => {
+        if (items.length === 0) {
+          this.router.navigate(['/product-list']);
+        }
+      });
     } catch (err) {
       this.error = 'Error removing item from cart';
       console.error('Remove item error:', err);

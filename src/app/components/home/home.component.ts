@@ -1,31 +1,29 @@
 import { Component } from '@angular/core';
-
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from '../../../shared/models/Product';
 import { ProductService } from '../../services/product.service';
 import { ProductListComponent } from "../product-list/product-list.component";
-
-
-
 
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  imports: [ProductListComponent],
+  imports: [RouterModule, CommonModule, ProductListComponent],
 
 })
 export class HomeComponent {
-changeTitle() {
-throw new Error('Method not implemented.');
-}
+  changeTitle() {
+    throw new Error('Method not implemented.');
+  }
 
-title: string = 'store-angular';
-message: string = 'Embrace the massive ecommerce';
-addToCart(arg0: Product) {
-throw new Error('Method not implemented.');
-}
+  title: string = 'Angular Store';
+  message: string = 'Discover our amazing collection of products with great deals and exclusive offers';
+  addToCart(arg0: Product) {
+    throw new Error('Method not implemented.');
+  }
   product!: Product;
 
   constructor(

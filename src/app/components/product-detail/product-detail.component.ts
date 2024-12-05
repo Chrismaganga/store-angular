@@ -28,7 +28,7 @@ throw new Error('Method not implemented.');
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.productService.getProductById(id).subscribe((data) => {
       this.product = data;
-      console.log('data', data)
+      // console.log('data', data)
     });
   }
 }

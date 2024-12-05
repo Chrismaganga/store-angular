@@ -1,5 +1,29 @@
 <div class="home-container">
-  <h1>My Store</h1>
-  <app-product-list class="product-list"></app-product-list>
-  <!-- <app-product-detail class="product-detail"></app-product-detail> -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Welcome to Our Store</h1>
+      <p>{{ message }}</p>
+      <div class="cta-buttons">
+        <button routerLink="/product-list" class="shop-now">Shop Now</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="feature-card">
+      <i class="fas fa-shipping-fast"></i>
+      <h3>Fast Delivery</h3>
+      <p>Free shipping on all orders</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-shield-alt"></i>
+      <h3>Secure Payment</h3>
+      <p>100% secure payment</p>
+    </div>
+    <div class="feature-card">
+      <i class="fas fa-headset"></i>
+      <h3>24/7 Support</h3>
+      <p>Dedicated support</p>
+    </div>
+  </section>
 </div>

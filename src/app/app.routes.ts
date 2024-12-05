@@ -4,6 +4,8 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
+import { HomeComponent } from './components/home/home.component';
+import { CartComponent } from './components/cart/cart.component';
 
 export const routes: Routes = [
   { 
@@ -15,13 +17,22 @@ export const routes: Routes = [
   },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'order-confirmation', component: OrderConfirmationComponent },
+  { path: 'cart', component: CartComponent },
   { 
-    path: 'product-list', component: ProductListComponent 
+    path: 'product-list', 
+    component: ProductListComponent 
   },
   { 
-    path: '', redirectTo: 'product-list', pathMatch: 'full' 
+    path: 'home', 
+    component: HomeComponent 
   },
   { 
-    path: '**', component: PageNotFoundComponent 
+    path: '', 
+    redirectTo: 'home', 
+    pathMatch: 'full' 
+  },
+  { 
+    path: '**', 
+    component: PageNotFoundComponent 
   }
 ];
