@@ -15,8 +15,8 @@
         <a routerLink="/product-list" 
            routerLinkActive="active">Products</a>
       </li>
-      <li>
-        <a routerLink="/cart" class="cart-link">
+      <li class="cart-container">
+        <a class="cart-link" (click)="toggleDropdown(); $event.preventDefault()">
           <div class="cart-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="9" cy="21" r="1"></circle>
@@ -25,7 +25,31 @@
             </svg>
             <span class="cart-badge" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
           </div>
+          <span class="cart-total" *ngIf="cartTotal > 0">${{ cartTotal | number:'1.2-2' }}</span>
         </a>
+        <div class="cart-dropdown" *ngIf="isDropdownOpen && cartItems.length > 0">
+          <div class="cart-items">
+            <div class="cart-item" *ngFor="let item of cartItems">
+              <img [src]="item.product.image" [alt]="item.product.title">
+              <div class="item-details">
+                <span class="item-title">{{ item.product.title }}</span>
+                <span class="item-price">${{ item.product.price * item.quantity | number:'1.2-2' }}</span>
+                <span class="item-quantity">Qty: {{ item.quantity }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="cart-footer">
+            <div class="cart-total">Total: ${{ cartTotal | number:'1.2-2' }}</div>
+            <button class="checkout-button" (click)="goToCheckout()">Checkout</button>
+          </div>
+        </div>
+      </li>
+      <li>
+        <a routerLink="/checkout" 
+           routerLinkActive="active" 
+           class="checkout-link"
+           (click)="closeDropdown()"
+           *ngIf="cartItemCount > 0">Checkout</a>
       </li>
     </ul>
   </nav>

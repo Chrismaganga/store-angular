@@ -113,13 +113,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   viewProductDetails(product: Product, event: Event): void {
     event.stopPropagation();
-    this.router.navigate(['/product', product.id]);
+    if (product && product.id) {
+      this.router.navigate(['/product-details', product.id]);
+    }
   }
 
-  onError(event: ErrorEvent): void {
-    console.error('Image load error', event);
+  onError(event: any): void {
     const imgElement = event.target as HTMLImageElement;
-    imgElement.src = 'assets/images/placeholder.png'; // Add a placeholder image
+    imgElement.src = 'assets/images/placeholder.png'; // Fallback image
   }
 
   getDiscountPercentage(product: Product): number {

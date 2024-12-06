@@ -9,11 +9,8 @@ import { CartComponent } from './components/cart/cart.component';
 
 export const routes: Routes = [
   { 
-    path: 'product-detail', 
-    component: ProductDetailComponent,
-    children: [
-      { path: ':id', component: ProductDetailComponent }
-    ]
+    path: 'product-details/:id', 
+    component: ProductDetailComponent
   },
   { path: 'checkout', component: CheckoutComponent },
   { path: 'order-confirmation', component: OrderConfirmationComponent },
