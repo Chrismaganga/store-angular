@@ -12,7 +12,7 @@
   align-items: center;
   padding: 1rem 2rem;
   background: linear-gradient(to right, #4ade80, #3b82f6);
-  color: white;
+  color: slate;
   position: fixed;
   top: 0;
   left: 0;
@@ -48,6 +48,9 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  text-align: center;
+  font-weight: bold;
+  font-size: larger;
 }
 
 .nav-links a {
@@ -58,6 +61,8 @@
   font-size: 0.9rem;
   letter-spacing: 0.5px;
   transition: opacity 0.2s;
+  text-shadow: #25eb46;
+  text-decoration-thickness: 0.1em;
 }
 
 .nav-links a:hover {
